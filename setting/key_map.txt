@@ -1,0 +1,63 @@
+1_a_1|Acquires a wake lock
+1_a_2|Sets a repeating alarm
+1_a_3|Mutes ringtone sound
+2_a_1|Queries the phones location
+3_a_1|Deletes SMS messages to hide received SMS
+4_a_1|May dial phone number
+4_a_2|Sends SMS using SmsManager
+4_a_3|May block phone calls / Accesses private ITelephony interface
+5_a_1|Has functionalty to add an overlay to other apps
+6_a_1|Monitors network connection state
+6_a_2|Uses HTTP for connecting to the internet
+6_a_3|Checks an internet connection is available
+6_a_4|Enables or disables WIFI
+6_a_5|Opens an internet connection
+6_a_6|Performs DNS lookups
+6_a_7|Scans for WIFI networks
+6_a_8|Monitors network connection state
+9_a_1|May take a camera picture
+9_a_10|Queries list of installed packages
+9_a_12|Queries email messages
+9_a_13|Queries stored mail and application accounts (e.g. Gmail or Whatsup)
+9_a_2|Queries calendar entries
+9_a_3|Queries camera information
+9_a_3|Queries camera information
+9_a_4|Queries phone contact information
+9_a_5|Creates SMS data
+9_a_6|Parses SMS data
+9_a_7|Queries SMS data
+9_a_9|Queries MMS data
+3_a_1|Deletes SMS messages to hide received SMS
+10_a_1|Launches other applications
+10_a_2|Sets an intent to the APK data type
+11_a_1|Uses reflection
+12_a_1|Accesses external storage location
+13_a_1|Creates SQLiteDatabase table
+13_a_1|Creates SQLiteDatabase table
+13_a_2|Reads shares settings
+13_a_3|Executes native commands
+13_a_4|Kills/terminates processes
+14_a_1|Creates a new jar file
+15_a_1|Queries several sensitive phone informations
+15_a_2|Queries the unique operating system id
+15_a_3|Accesses /proc
+15_a_5|Executes logcat command
+16_a_1|Queries list of running processes/tasks
+17_a_1|Queries the network operator name
+17_a_2|Queries the network operator numeric MCC+MNC
+17_a_3|Queries the unqiue device ID
+17_a_4|Queries the SIM provider ISO country code
+17_a_5|Checks if phone is rooted (checks for Superuser.apk)
+17_a_6|Checks if phone is rooted (checks for test-keys build tags)
+17_a_7|Queries the WIFI MAC address
+19_a_1|Hide the app icon
+19_a_10|Abort broadcast
+19_a_11|Suspicious email address
+19_a_12|Suspicious phone number
+19_a_2|Access to mobile device id
+19_a_3|Access to mobile phone contacts
+19_a_4|To obtain call records
+19_a_5|Access to the system administrator permissions
+19_a_6|Access to mobile phone sms records
+19_a_7|Send email
+19_a_8|Send sms
