@@ -3,7 +3,7 @@
 # @Author: anchen
 # @Date:   2016-12-01 19:11:22
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-06 11:00:23
+# @Last Modified time: 2016-12-06 11:15:51
 from module.xml_parser import XmlParser
 from module.file_hash import *
 from module.tell_virus_apk import VirusApkAnalyze
@@ -58,7 +58,7 @@ class BasicInfoSort(object):
         with open(self.outdata_path,'w+') as f:
             f.write(out)
 
-        self.sql = 'insert into ywc_apk_basic_info values (' + quote(self.apk_code) + ',' + quote(uft_to_gbk(apk_file_name)) + ',' + quote(md5) + ',' + quote(sha1) + ',' + quote(sha256) + ',' + quote(sha512) + ',' + to_date() + ',' + to_date() + ',' + quote(apk_download_ip) + ',' + quote(uft_to_gbk(short_url)) + ',' + quote(uft_to_gbk(long_url)) + ',' + quote(uft_to_gbk(self.sms_content)) + ',' + quote(virus_score) + ',' + quote(virus_grade) + ',' + quote(apk_analyze_run_time) + ',' + quote(min_sdk) + ',' + quote(fit_sdk) + ',' + quote(uft_to_gbk(ip_attribution)) + ');'
+        self.sql = 'insert into ywc_apk_basic_info values (' + quote(self.apk_code) + ',' + quote(apk_file_name) + ',' + quote(md5) + ',' + quote(sha1) + ',' + quote(sha256) + ',' + quote(sha512) + ',' + to_date() + ',' + to_date() + ',' + quote(apk_download_ip) + ',' + quote(short_url) + ',' + quote(long_url) + ',' + quote(self.sms_content) + ',' + quote(virus_score) + ',' + quote(virus_grade) + ',' + quote(apk_analyze_run_time) + ',' + quote(min_sdk) + ',' + quote(fit_sdk) + ',' + quote(ip_attribution) + ');'
 
     def upload_to_database(self):
         sql_exec(self.sql)
