@@ -3,10 +3,13 @@
 # @Author: anchen
 # @Date:   2016-12-01 19:11:22
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-05 19:45:42
+# @Last Modified time: 2016-12-06 11:00:23
 from module.xml_parser import XmlParser
 from module.file_hash import *
 from module.tell_virus_apk import VirusApkAnalyze
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 class BasicInfoSort(object):
     """docstring for BasicInfoSort"""
