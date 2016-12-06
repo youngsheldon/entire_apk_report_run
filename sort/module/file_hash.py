@@ -3,7 +3,7 @@
 # @Author: anchen
 # @Date:   2016-11-10 09:20:32
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-05 19:40:12
+# @Last Modified time: 2016-12-06 11:25:03
 import hashlib
 import os,sys
 import functools
@@ -103,10 +103,6 @@ def get_apk_file_name(path):
     pos2 = value.find('\'') 
     file_name = value[pos1+1:pos2]
     return file_name.split('.')[0]
-
-def uft_to_gbk(content):
-    src = content.decode("utf8").encode("gbk") 
-    return src 
 
 def get_datetime():
     return time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))

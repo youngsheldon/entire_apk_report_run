@@ -3,7 +3,7 @@
 # @Author: anchen
 # @Date:   2016-12-01 19:11:22
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-06 11:15:51
+# @Last Modified time: 2016-12-06 11:40:10
 from module.xml_parser import XmlParser
 from module.file_hash import *
 from module.tell_virus_apk import VirusApkAnalyze
@@ -23,6 +23,7 @@ class BasicInfoSort(object):
         self.outdata_path = outdata_path
         self.sms_content = sms_content
         self.sql = ''
+        self.v = None
 
     def get_virus_grade(self,score):
         if score > 70:
@@ -34,6 +35,13 @@ class BasicInfoSort(object):
 
     def get_apk_analyze_run_time(self):
         return '1024'
+
+    def utf8_to_gbk(self):
+        with open(self.outdata_path,'r') as f1:
+            content = f1.read()
+        with open(self.outdata_path,'w+') as f2:
+            src = content.decode("utf8").encode("gbk") 
+            f2.write(src)
 
     def basic_info_collect(self):
         md5 = check_hash(self.apk_path,'md5')
@@ -58,7 +66,16 @@ class BasicInfoSort(object):
         with open(self.outdata_path,'w+') as f:
             f.write(out)
 
-        self.sql = 'insert into ywc_apk_basic_info values (' + quote(self.apk_code) + ',' + quote(apk_file_name) + ',' + quote(md5) + ',' + quote(sha1) + ',' + quote(sha256) + ',' + quote(sha512) + ',' + to_date() + ',' + to_date() + ',' + quote(apk_download_ip) + ',' + quote(short_url) + ',' + quote(long_url) + ',' + quote(self.sms_content) + ',' + quote(virus_score) + ',' + quote(virus_grade) + ',' + quote(apk_analyze_run_time) + ',' + quote(min_sdk) + ',' + quote(fit_sdk) + ',' + quote(ip_attribution) + ');'
+        self.utf8_to_gbk()
+
+        with open(self.outdata_path,'r') as f:
+            for line in f:
+                self.v = line.strip().split('|')
+                break 
+
+        self.sql = 'insert into ywc_apk_basic_info values (' + quote(self.v[0]) + ',' + quote(self.v[1]) + ',' + quote(self.v[2]) + ',' + quote(self.v[3]) + ',' + quote(self.v[4]) + ',' + quote(self.v[5]) + ',' + to_date() + ',' + to_date() + ',' + quote(self.v[8]) + ',' + quote(self.v[9]) + ',' + quote(self.v[10]) + ',' + quote(self.v[11]) + ',' + quote(self.v[12]) + ',' + quote(self.v[13]) + ',' + quote(self.v[14]) + ',' + quote(self.v[15]) + ',' + quote(self.v[16]) + ',' + quote(self.v[17]) + ');'
 
     def upload_to_database(self):
         sql_exec(self.sql)
+
+
