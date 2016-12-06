@@ -3,12 +3,7 @@
 # @Author: anchen
 # @Date:   2016-12-05 19:33:54
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-05 19:39:34
-x = '搭建'
+# @Last Modified time: 2016-12-06 20:53:23
+from sort.module.file_hash import *
 
-def uft_to_gbk(content):
-    src = content.decode("utf8").encode("gbk") 
-    return src 
-
-with open('out.txt','a+') as f:
-    f.write(uft_to_gbk(x))
+print get_ip_attribution('218.75.176.174')

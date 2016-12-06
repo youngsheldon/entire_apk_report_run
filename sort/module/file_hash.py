@@ -3,12 +3,13 @@
 # @Author: anchen
 # @Date:   2016-11-10 09:20:32
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-06 11:25:03
+# @Last Modified time: 2016-12-06 20:47:44
 import hashlib
 import os,sys
 import functools
 import time
 import re
+import commands  
 from Mylog import Mylog 
 from os.path import join, getsize
 
@@ -107,11 +108,9 @@ def get_apk_file_name(path):
 def get_datetime():
     return time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
 
-def get_sms_content():
-    return '6AA927B1F5AD5A1C3ED52E6DBC7BBC96ED229317107B7E8FF042AB4D6E34413F53C48EDFF1ACB521258795C596AE51732AB68CBCFEFF8C4EF0B6C8DBC32EBCB1F93CEC057F20862F832339FB26329C92832339FB26329C92832339FB26329C92832339FB26329C92521CE764DCFFBD51'
-
 def get_ip_attribution(ip):
-    return '中国黑龙江哈尔滨市'
+    ret= commands.getstatusoutput('./check_ip.sh 1 ' + ip)  
+    return ret[1]
 
 def get_file_path_list(rootDir):
         file_path_list=[]
