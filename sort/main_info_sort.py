@@ -3,12 +3,15 @@
 # @Author: anchen
 # @Date:   2016-12-01 17:44:54
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-05 10:33:44
+# @Last Modified time: 2016-12-06 11:55:27
 import os 
 from module.xml_parser import XmlParser
 from module.file_hash import *
 from module.res_file_find import *
 from module.code_sort import Analyze
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 class MainDataSort(object):
     """docstring for MainDataSort"""
@@ -35,6 +38,7 @@ class MainDataSort(object):
 
     def parser_source_code(self):
         obj1 = Analyze(self.apk_source_path,self.apk_code,self.outdata_path,self.code_key_path)
+        obj1.enablePrint()
         obj1.run()
 
     def parser_xml(self):
@@ -48,8 +52,16 @@ class MainDataSort(object):
         self.parser_source_code()
         self.parser_xml()
 
+    def utf8_to_gbk(self):
+        with open(self.outdata_path,'r') as f1:
+            content = f1.read()
+        with open(self.outdata_path,'w+') as f2:
+            src = content.decode("utf8").encode("gbk") 
+            f2.write(src)
+
     def upload_to_database(self):
         sql_list = []
+        self.utf8_to_gbk()
         with open(self.outdata_path,'r') as f:
             for line in f:
                 v = line.strip().split('|')

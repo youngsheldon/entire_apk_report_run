@@ -3,7 +3,7 @@
 # @Author: anchen
 # @Date:   2016-12-02 11:41:57
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-05 16:23:36
+# @Last Modified time: 2016-12-06 11:57:52
 import sys,os
 import time
 from sort.basic_info_sort import BasicInfoSort
@@ -101,6 +101,8 @@ class ApkReport(object):
                     t2 = time.time()
                     cost = t2 - t1
                     update_cost(self.apk_md5,cost)
+                    self.mylog.info('[' + self.apk_md5 + ':-------finish---------]')
+                    print self.apk_md5 + '------------finish-----------------'
                 except Exception, e:
                     self.save_problem_apk_md5()
                     self.remove_data_dir()

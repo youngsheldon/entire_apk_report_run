@@ -3,11 +3,14 @@
 # @Author: anchen
 # @Date:   2016-12-01 18:40:33
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-05 11:06:12
+# @Last Modified time: 2016-12-06 11:53:12
 import os 
 from module.xml_parser import XmlParser
 from module.file_hash import *
 from module.res_file_find import *
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 class ResInfoSort(object):
     """docstring for ResInfoSort"""
@@ -39,8 +42,16 @@ class ResInfoSort(object):
         self.list_type_data_out(self.outdata_path,inf_list,self.apk_code)
         self.list_type_data_out(self.outdata_path,bin_list,self.apk_code)
 
+    def utf8_to_gbk(self):
+        with open(self.outdata_path,'r') as f1:
+            content = f1.read()
+        with open(self.outdata_path,'w+') as f2:
+            src = content.decode("utf8").encode("gbk") 
+            f2.write(src)
+
     def upload_to_database(self):
         sql_list = []
+        self.utf8_to_gbk()
         with open(self.outdata_path,'r') as f:
             for line in f:
                 v = line.strip().split('|')
