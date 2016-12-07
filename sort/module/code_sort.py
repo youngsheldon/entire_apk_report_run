@@ -3,7 +3,7 @@
 # @Author: anchen
 # @Date:   2016-08-23 17:24:54
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-07 17:06:55
+# @Last Modified time: 2016-12-07 19:04:55
 import os
 import re
 import sys
@@ -30,6 +30,7 @@ class Analyze(object):
         self.filepath = ''
         self.line_index = ''
         self.code_content = ''
+        self.key = ''
 
     def enablePrint(self):
         self.print_flag = 1
@@ -66,9 +67,13 @@ class Analyze(object):
         return ret[0].split('\"')[1]
 
     def get_email_addr(self,tar):
-        expr = '\".*@.*\"'
+        expr = '\".*\"'
         ret = re.compile(expr).findall(tar) 
-        return ret[0].split('\"')[1]
+        xx = ret[0].split('\"')
+        for v in xx:
+            if '@' in v:
+                return v 
+        return 'none'
 
     def update_outdate(self):
         out = self.apk_md5 + '|' + self.key + '|' + self.filepath + '|' + self.line_index + '|' + self.code_content + '\n'
@@ -76,9 +81,9 @@ class Analyze(object):
 
     def update_outdate2(self):
         type_value = ''
-        if self.key =='19_a_11' or self.key =='19_a_12':
+        if self.key == '19_a_11' or self.key == '19_a_12':
             type_value = '4'
-            if self.key =='19_a_11':
+            if self.key == '19_a_11':
                 self.code_content = self.get_email_addr(self.code_content)
             else:
                 self.code_content = self.get_phone_num(self.code_content)
