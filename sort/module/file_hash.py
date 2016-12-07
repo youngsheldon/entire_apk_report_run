@@ -3,7 +3,7 @@
 # @Author: anchen
 # @Date:   2016-11-10 09:20:32
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-07 15:36:35
+# @Last Modified time: 2016-12-07 17:14:51
 import hashlib
 import os,sys
 import functools
@@ -204,3 +204,7 @@ def update_last_update(apk_md5):
 def to_date():
     out = 'to_date(' + '\'' + get_datetime() + '\'' + ',' + '\'' + 'YYYY-MM-DD HH24:MI:SS' + '\'' + ')'  
     return out 
+
+def get_apk_report_name():
+    v = get_datetime().split('-')
+    return 'ywc_apk_report_' + v[0] + v[1]

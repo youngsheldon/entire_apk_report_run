@@ -3,7 +3,7 @@
 # @Author: anchen
 # @Date:   2016-08-23 17:24:54
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-02 10:34:56
+# @Last Modified time: 2016-12-07 17:06:55
 import os
 import re
 import sys
@@ -60,6 +60,16 @@ class Analyze(object):
         expr_list=sorted(expr_dict.iteritems(),key = lambda asd:asd[0],reverse = False)
         return expr_list
 
+    def get_phone_num(self,tar):
+        expr = '\"1\d{10}"'
+        ret = re.compile(expr).findall(tar) 
+        return ret[0].split('\"')[1]
+
+    def get_email_addr(self,tar):
+        expr = '\".*@.*\"'
+        ret = re.compile(expr).findall(tar) 
+        return ret[0].split('\"')[1]
+
     def update_outdate(self):
         out = self.apk_md5 + '|' + self.key + '|' + self.filepath + '|' + self.line_index + '|' + self.code_content + '\n'
         self.temp_content += out 
@@ -68,6 +78,10 @@ class Analyze(object):
         type_value = ''
         if self.key =='19_a_11' or self.key =='19_a_12':
             type_value = '4'
+            if self.key =='19_a_11':
+                self.code_content = self.get_email_addr(self.code_content)
+            else:
+                self.code_content = self.get_phone_num(self.code_content)
         else:
             type_value = '3'
         out = self.apk_md5 + '|' + type_value + '|' + self.get_api_describe_from_key(self.key) + '|' + self.code_content + '\n'

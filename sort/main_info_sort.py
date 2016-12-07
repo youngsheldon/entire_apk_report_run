@@ -3,7 +3,7 @@
 # @Author: anchen
 # @Date:   2016-12-01 17:44:54
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-06 11:55:27
+# @Last Modified time: 2016-12-07 17:22:09
 import os 
 from module.xml_parser import XmlParser
 from module.file_hash import *
@@ -61,6 +61,7 @@ class MainDataSort(object):
 
     def upload_to_database(self):
         sql_list = []
+        apk_report_table_name = get_apk_report_name()
         self.utf8_to_gbk()
         with open(self.outdata_path,'r') as f:
             for line in f:
@@ -69,16 +70,6 @@ class MainDataSort(object):
                 type_v = v[1]
                 name = v[2]
                 value = v[3]
-                sql = 'insert into  ywc_apk_report_201611 (ucode,type,name,value)values(' + quote(apk_code) + ',' + str(type_v) + ',' + quote(name) + ',' + quote(value) + ');'
+                sql = 'insert into  ' + apk_report_table_name + ' (ucode,type,name,value)values(' + quote(apk_code) + ',' + str(type_v) + ',' + quote(name) + ',' + quote(value) + ');'
                 sql_list.append(sql)
             sql_exec(sql_list)
-
-# apk_path = '29b95ff530c038fd9632c8d1eef79e20.apk'
-# xml_path = 'temp.xml'
-# apk_source_path = 'apk_source/0f11e5c885d7cc1e5f2d73525f033ca1/'
-# apk_code = '0f11e5c885d7cc1e5f2d7352'
-# outdata_path = 'code_block.txt'
-# code_key_path = 'code_key.txt'
-
-# obj = MainDataSort(apk_path,xml_path,apk_source_path,apk_code,outdata_path,code_key_path)
-# obj.run()

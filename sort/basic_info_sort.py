@@ -3,7 +3,7 @@
 # @Author: anchen
 # @Date:   2016-12-01 19:11:22
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-07 15:26:49
+# @Last Modified time: 2016-12-07 17:17:21
 from module.xml_parser import XmlParser
 from module.file_hash import *
 from module.tell_virus_apk import VirusApkAnalyze
