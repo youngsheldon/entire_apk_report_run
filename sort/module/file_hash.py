@@ -3,7 +3,7 @@
 # @Author: anchen
 # @Date:   2016-11-10 09:20:32
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-07 17:14:51
+# @Last Modified time: 2016-12-07 19:10:43
 import hashlib
 import os,sys
 import functools
@@ -193,12 +193,12 @@ def quote(str_obj):
     return '\'' + str_obj + '\'' 
 
 def update_cost(apk_md5,cost):
-    sql = 'update  ywc_apk_basic_info set cost=' + str(int(cost)) + ' where md5 = ' +       '\'' + apk_md5 + '\'' +';'
+    sql = 'update  apk_basic_info set cost=' + str(int(cost)) + ' where md5 = ' +       '\'' + apk_md5 + '\'' +';'
     sql_exec(sql)
 
 def update_last_update(apk_md5):
     now_datetime = get_datetime()
-    sql = 'update  ywc_apk_basic_info set last_update=to_date( \'' + now_datetime + '\' , \'' + 'YYYY-MM-DD HH24:MI:SS\' ) where md5 = ' + '\'' + apk_md5 + '\'' +';'
+    sql = 'update  apk_basic_info set last_update=to_date( \'' + now_datetime + '\' , \'' + 'YYYY-MM-DD HH24:MI:SS\' ) where md5 = ' + '\'' + apk_md5 + '\'' +';'
     sql_exec(sql)
 
 def to_date():
@@ -207,4 +207,4 @@ def to_date():
 
 def get_apk_report_name():
     v = get_datetime().split('-')
-    return 'ywc_apk_report_' + v[0] + v[1]
+    return 'apk_report_' + v[0] + v[1]

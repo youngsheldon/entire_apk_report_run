@@ -3,7 +3,7 @@
 # @Author: anchen
 # @Date:   2016-12-01 18:40:33
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-07 15:55:06
+# @Last Modified time: 2016-12-07 19:09:49
 import os 
 from module.xml_parser import XmlParser
 from module.file_hash import *
@@ -59,7 +59,7 @@ class ResInfoSort(object):
                 type_v = v[1]
                 file_name = v[2]
                 path = v[3]
-                sql = 'insert into  ywc_apk_resource (ucode,format,name,path)values(' + quote(apk_code) + ',' + quote(type_v) + ',' + quote(file_name) + ',' + quote(path) + ');'
+                sql = 'insert into  apk_resource (ucode,format,name,path)values(' + quote(apk_code) + ',' + quote(type_v) + ',' + quote(file_name) + ',' + quote(path) + ');'
                 sql_list.append(sql)
             sql_exec(sql_list)
 

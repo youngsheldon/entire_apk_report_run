@@ -3,7 +3,7 @@
 # @Author: anchen
 # @Date:   2016-12-01 19:11:22
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-07 17:17:21
+# @Last Modified time: 2016-12-07 19:10:01
 from module.xml_parser import XmlParser
 from module.file_hash import *
 from module.tell_virus_apk import VirusApkAnalyze
@@ -77,7 +77,7 @@ class BasicInfoSort(object):
                 self.v = line.strip().split('|')
                 break 
 
-        self.sql = 'insert into ywc_apk_basic_info values (' + quote(self.v[0]) + ',' + quote(self.v[1]) + ',' + quote(self.v[2]) + ',' + quote(self.v[3]) + ',' + quote(self.v[4]) + ',' + quote(self.v[5]) + ',' + to_date() + ',' + to_date() + ',' + quote(self.v[8]) + ',' + quote(self.v[9]) + ',' + quote(self.v[10]) + ',' + quote(self.v[11]) + ',' + quote(self.v[12]) + ',' + quote(self.v[13]) + ',' + quote(self.v[14]) + ',' + quote(self.v[15]) + ',' + quote(self.v[16]) + ',' + quote(self.v[17]) + ',' + quote(self.v[18]) + ',' + quote(self.v[19]) + ',' + quote(self.v[20]) + ',' + quote(self.v[21]) + ');'
+        self.sql = 'insert into apk_basic_info values (' + quote(self.v[0]) + ',' + quote(self.v[1]) + ',' + quote(self.v[2]) + ',' + quote(self.v[3]) + ',' + quote(self.v[4]) + ',' + quote(self.v[5]) + ',' + to_date() + ',' + to_date() + ',' + quote(self.v[8]) + ',' + quote(self.v[9]) + ',' + quote(self.v[10]) + ',' + quote(self.v[11]) + ',' + quote(self.v[12]) + ',' + quote(self.v[13]) + ',' + quote(self.v[14]) + ',' + quote(self.v[15]) + ',' + quote(self.v[16]) + ',' + quote(self.v[17]) + ',' + quote(self.v[18]) + ',' + quote(self.v[19]) + ',' + quote(self.v[20]) + ',' + quote(self.v[21]) + ');'
 
     def upload_to_database(self):
         sql_exec(self.sql)
