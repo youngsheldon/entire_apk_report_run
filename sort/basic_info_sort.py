@@ -3,7 +3,7 @@
 # @Author: anchen
 # @Date:   2016-12-01 19:11:22
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-06 11:40:10
+# @Last Modified time: 2016-12-07 11:02:16
 from module.xml_parser import XmlParser
 from module.file_hash import *
 from module.tell_virus_apk import VirusApkAnalyze
@@ -49,7 +49,6 @@ class BasicInfoSort(object):
         sha256 = check_hash(self.apk_path,'sha256')
         sha512 = check_hash(self.apk_path,'sha512')
         short_url,long_url = get_url(self.apk_download_log_path)
-        apk_download_ip = get_ip(self.apk_download_log_path)
         apk_file_name = get_apk_file_name(self.apk_download_log_path)
         apk_sdk_obj = XmlParser(self.apk_path,self.xml_path)
         min_sdk,fit_sdk = apk_sdk_obj.parserSdkVersion()
@@ -59,9 +58,11 @@ class BasicInfoSort(object):
         virus_score = virus_apk_tell_obj.virus_tell()
         virus_grade = self.get_virus_grade(virus_score)
         apk_analyze_run_time = self.get_apk_analyze_run_time()
-        ip_attribution = get_ip_attribution(apk_download_ip)
+        init_ip,target_ip = get_ip(self.apk_download_log_path)
+        init_ip_attribution = get_ip_attribution(init_ip)
+        target_ip_attribution = get_ip_attribution(target_ip)
 
-        out = self.apk_code + '|' + apk_file_name + '|' + md5 + '|' + sha1 + '|' + sha256  + '|' + sha512 + '|' + first_found_time + '|' + last_found_time + '|' + apk_download_ip + '|' + short_url + '|' + long_url + '|' + self.sms_content + '|' + virus_score + '|' + virus_grade + '|' + apk_analyze_run_time + '|' + min_sdk +   '|' + fit_sdk + '|' + ip_attribution + '\n'
+        out = self.apk_code + '|' + apk_file_name + '|' + md5 + '|' + sha1 + '|' + sha256  + '|' + sha512 + '|' + first_found_time + '|' + last_found_time + '|' + short_url + '|' + long_url + '|' + self.sms_content + '|' + virus_score + '|' + virus_grade + '|' + apk_analyze_run_time + '|' + min_sdk +   '|' + fit_sdk + '|' + init_ip + '|' + init_ip_attribution + '|' + target_ip + '|' + target_ip_attribution + '\n'
 
         with open(self.outdata_path,'w+') as f:
             f.write(out)
@@ -73,7 +74,7 @@ class BasicInfoSort(object):
                 self.v = line.strip().split('|')
                 break 
 
-        self.sql = 'insert into ywc_apk_basic_info values (' + quote(self.v[0]) + ',' + quote(self.v[1]) + ',' + quote(self.v[2]) + ',' + quote(self.v[3]) + ',' + quote(self.v[4]) + ',' + quote(self.v[5]) + ',' + to_date() + ',' + to_date() + ',' + quote(self.v[8]) + ',' + quote(self.v[9]) + ',' + quote(self.v[10]) + ',' + quote(self.v[11]) + ',' + quote(self.v[12]) + ',' + quote(self.v[13]) + ',' + quote(self.v[14]) + ',' + quote(self.v[15]) + ',' + quote(self.v[16]) + ',' + quote(self.v[17]) + ');'
+        self.sql = 'insert into ywc_apk_basic_info values (' + quote(self.v[0]) + ',' + quote(self.v[1]) + ',' + quote(self.v[2]) + ',' + quote(self.v[3]) + ',' + quote(self.v[4]) + ',' + quote(self.v[5]) + ',' + to_date() + ',' + to_date() + ',' + quote(self.v[8]) + ',' + quote(self.v[9]) + ',' + quote(self.v[10]) + ',' + quote(self.v[11]) + ',' + quote(self.v[12]) + ',' + quote(self.v[13]) + ',' + quote(self.v[14]) + ',' + quote(self.v[15]) + ',' + quote(self.v[16]) + ',' + quote(self.v[17]) + ',' + quote(self.v[18]) + ',' + quote(self.v[19]) + ');'
 
     def upload_to_database(self):
         sql_exec(self.sql)

@@ -3,7 +3,7 @@
 # @Author: anchen
 # @Date:   2016-11-10 09:20:32
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-06 20:47:44
+# @Last Modified time: 2016-12-07 10:51:31
 import hashlib
 import os,sys
 import functools
@@ -12,6 +12,11 @@ import re
 import commands  
 from Mylog import Mylog 
 from os.path import join, getsize
+import urllib2 
+import simplejson 
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 def check_hash(filepath,type):
     with open(filepath,'rb') as f:
@@ -92,7 +97,10 @@ def get_ip(path):
     with open(path,'r') as f:
         content = f.read()
     ret = pattern.findall(content) 
-    return ret[-1]
+    if len(ret) == 1:
+        return ret[0],ret[0]
+    else:
+        return ret[0],ret[-1]
 
 def get_apk_file_name(path):
     pattern = re.compile('`.*.apk.*saved')  
@@ -108,9 +116,27 @@ def get_apk_file_name(path):
 def get_datetime():
     return time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
 
-def get_ip_attribution(ip):
+def get_ip_attribution2(ip):
     ret= commands.getstatusoutput('./check_ip.sh 1 ' + ip)  
     return ret[1]
+
+def get_ip_attribution(ip):
+    url = 'http://ip.taobao.com/service/getIpInfo.php?ip=%s' % ip 
+    f = urllib2.urlopen(url).read()
+    s = simplejson.loads(f)
+    ret = []
+    ret.append(s['data']['ip'])
+    ret.append(s['data']['country'])
+    ret.append(s['data']['country_id'])
+    ret.append(s['data']['area'])
+    ret.append(s['data']['area_id'])
+    ret.append(s['data']['region'])
+    ret.append(s['data']['region_id'])
+    ret.append(s['data']['city'])
+    ret.append(s['data']['city_id'])
+    ret.append(s['data']['isp'])
+    ret.append(s['data']['isp_id'])
+    return ret[1] + '-' + ret[3] + '-' + ret[5] + '-' + ret[7] + '-' + ret[9]
 
 def get_file_path_list(rootDir):
         file_path_list=[]
