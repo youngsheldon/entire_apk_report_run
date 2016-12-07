@@ -3,7 +3,7 @@
 # @Author: anchen
 # @Date:   2016-12-02 11:41:57
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-06 11:57:52
+# @Last Modified time: 2016-12-07 15:28:18
 import sys,os
 import time
 from sort.basic_info_sort import BasicInfoSort
@@ -31,6 +31,7 @@ class ApkReport(object):
         self.apk_alarm_log_path = '/opt/smmc/data_backup/compilation'
         self.apk_alarm_log_backup_path = '/opt/smmc/data_backup/compilation/backup/'
         self.mylog = Mylog('data/log.txt').getObject()
+        self.first_found_time = get_datetime()
 
     def check_md5(self):
         with open('data/md5.txt','r') as f:
@@ -94,7 +95,7 @@ class ApkReport(object):
                     self.mylog.info('[' + self.apk_md5 + ':begin to upload data to apk_resource]')
                     apk_res.upload_to_database()
                     self.mylog.info('[' + self.apk_md5 + ':begin to generate data for apk_basic_info]')
-                    apk_basic_obj = BasicInfoSort(self.apk_code,self.apk_path,self.apk_download_log_path,self.xml_path,self.main_info_outdata_path,self.code_key_path,self.sms_content,self.basic_info_outdata_path)
+                    apk_basic_obj = BasicInfoSort(self.apk_code,self.apk_path,self.apk_download_log_path,self.xml_path,self.main_info_outdata_path,self.code_key_path,self.sms_content,self.first_found_time,self.source_path,self.basic_info_outdata_path)
                     apk_basic_obj.basic_info_collect()
                     self.mylog.info('[' + self.apk_md5 + ':begin to upload data to apk_basic_info]')
                     apk_basic_obj.upload_to_database()
@@ -108,7 +109,7 @@ class ApkReport(object):
                     self.remove_data_dir()
                     self.remove_apk_code_source()
                     self.mylog.exception(self.apk_md5)
-                    os._exit(0)
+                    # os._exit(0)
 
     def run(self):
         alarm_dict = get_to_handle_apk_info(self.apk_alarm_log_path,self.apk_alarm_log_backup_path)

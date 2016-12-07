@@ -3,7 +3,7 @@
 # @Author: anchen
 # @Date:   2016-09-27 12:05:28
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-03 21:30:56
+# @Last Modified time: 2016-12-07 14:21:44
 import re 
 import os 
 import sys
@@ -29,13 +29,22 @@ class VirusApkAnalyze(object):
         self.act_list = []
         self.permis_act_list_generator(self.act_permis_path)
 
-    def item_couter(self,content,detectItem):
+    def item_couter(self,detectItem):
         couter = 0 
-        for item in detectItem:
-            ret = content.find(item)
-            if ret is not -1:
-                couter += 1
-        return couter
+        code_key_list = self.get_code_key()
+        for v in code_key_list:
+            if v in detectItem:
+                couter += 1 
+        return couter 
+
+
+    def get_code_key(self):
+        ret = []
+        with open(self.code_key_path,'r') as f:
+            for line in f:
+                v = line.strip()
+                ret.append(v)
+            return ret
 
     def permis_act_list_generator(self,path):
         with open(path,'r') as f:
@@ -48,15 +57,13 @@ class VirusApkAnalyze(object):
                     self.act_list.append(v)
 
     def codeblock_evaluation(self):
-        with open(self.code_key_path,'r') as f:
-            content = f.read()
-        senderCouter = self.item_couter(content,sender)
+        senderCouter = self.item_couter(sender)
         print 'senderCouter=' + str(senderCouter)
-        sendExeCouter = self.item_couter(content,sendExe)
+        sendExeCouter = self.item_couter(sendExe)
         print 'sendExeCouter=' + str(sendExeCouter)
-        getContentCouter = self.item_couter(content,getContent)
+        getContentCouter = self.item_couter(getContent)
         print 'getContentCouter=' + str(getContentCouter)
-        badBehaviorCouter = self.item_couter(content,badBehavior)
+        badBehaviorCouter = self.item_couter(badBehavior)
         print 'badBehaviorCouter=' + str(badBehaviorCouter) 
         if senderCouter != 0 and sendExeCouter != 0 and getContentCouter != 0:
             ret1 = 50.0 + 10.0 * ((senderCouter + sendExeCouter + getContentCouter)/8.0)

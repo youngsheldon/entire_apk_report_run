@@ -3,7 +3,7 @@
 # @Author: anchen
 # @Date:   2016-11-10 09:20:32
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-07 10:51:31
+# @Last Modified time: 2016-12-07 15:36:35
 import hashlib
 import os,sys
 import functools
@@ -33,7 +33,7 @@ def check_hash(filepath,type):
         return hash    
 
 def get_file_size(path):
-    return getsize(path)/1024.0 
+    return getsize(path)/1024
 
 def get_filename(path):
     return path.split('/')[-1].split('.')[0]
@@ -83,24 +83,30 @@ def get_url(path):
     with open(path,'r') as f:
         content = f.read()
     ret = pattern.findall(content) 
-    for v in ret:
-        if '[following]' not in v:
-            url_list.append(v)
-    out = sorted(url_list, key=lambda x: len(x)) 
-    if len(out) > 1:
-        return out[0],out[-1]
+    if ret:
+        for v in ret:
+            if '[following]' not in v:
+                url_list.append(v)
+        out = sorted(url_list, key=lambda x: len(x)) 
+        if len(out) > 1:
+            return out[0],out[-1]
+        else:
+            return out[0],out[0]
     else:
-        return out[0],out[0]
+        return 'not url found','not url found'
 
 def get_ip(path):
     pattern = re.compile('\d+\.\d+\.\d+\.\d+')  
     with open(path,'r') as f:
         content = f.read()
     ret = pattern.findall(content) 
-    if len(ret) == 1:
-        return ret[0],ret[0]
+    if ret:
+        if len(ret) == 1:
+            return ret[0],ret[0]
+        else:
+            return ret[0],ret[-1]
     else:
-        return ret[0],ret[-1]
+        return 'not ip found','not ip found'
 
 def get_apk_file_name(path):
     pattern = re.compile('`.*.apk.*saved')  
@@ -121,22 +127,25 @@ def get_ip_attribution2(ip):
     return ret[1]
 
 def get_ip_attribution(ip):
-    url = 'http://ip.taobao.com/service/getIpInfo.php?ip=%s' % ip 
-    f = urllib2.urlopen(url).read()
-    s = simplejson.loads(f)
-    ret = []
-    ret.append(s['data']['ip'])
-    ret.append(s['data']['country'])
-    ret.append(s['data']['country_id'])
-    ret.append(s['data']['area'])
-    ret.append(s['data']['area_id'])
-    ret.append(s['data']['region'])
-    ret.append(s['data']['region_id'])
-    ret.append(s['data']['city'])
-    ret.append(s['data']['city_id'])
-    ret.append(s['data']['isp'])
-    ret.append(s['data']['isp_id'])
-    return ret[1] + '-' + ret[3] + '-' + ret[5] + '-' + ret[7] + '-' + ret[9]
+    if ip == 'not ip found':
+        return 'no attribution'
+    else:
+        url = 'http://ip.taobao.com/service/getIpInfo.php?ip=%s' % ip 
+        f = urllib2.urlopen(url).read()
+        s = simplejson.loads(f)
+        ret = []
+        ret.append(s['data']['ip'])
+        ret.append(s['data']['country'])
+        ret.append(s['data']['country_id'])
+        ret.append(s['data']['area'])
+        ret.append(s['data']['area_id'])
+        ret.append(s['data']['region'])
+        ret.append(s['data']['region_id'])
+        ret.append(s['data']['city'])
+        ret.append(s['data']['city_id'])
+        ret.append(s['data']['isp'])
+        ret.append(s['data']['isp_id'])
+        return ret[1] + '-' + ret[3] + '-' + ret[5] + '-' + ret[7] + '-' + ret[9]
 
 def get_file_path_list(rootDir):
         file_path_list=[]
