@@ -3,7 +3,7 @@
 # @Author: anchen
 # @Date:   2016-12-01 18:40:33
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-07 19:09:49
+# @Last Modified time: 2016-12-07 19:29:46
 import os 
 from module.xml_parser import XmlParser
 from module.file_hash import *
@@ -34,11 +34,11 @@ class ResInfoSort(object):
 
     def run(self):
         picture_list = collect_picture(self.apk_source_path)
-        data_list = collect_data(self.apk_source_path)
+        # data_list = collect_data(self.apk_source_path)
         inf_list = collect_inf(self.apk_source_path)
         bin_list = collect_inf(self.apk_source_path)
         self.list_type_data_out(self.outdata_path,picture_list,self.apk_code)
-        self.list_type_data_out(self.outdata_path,data_list,self.apk_code)
+        # self.list_type_data_out(self.outdata_path,data_list,self.apk_code)
         self.list_type_data_out(self.outdata_path,inf_list,self.apk_code)
         self.list_type_data_out(self.outdata_path,bin_list,self.apk_code)
 
