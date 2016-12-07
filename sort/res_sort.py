@@ -3,7 +3,7 @@
 # @Author: anchen
 # @Date:   2016-12-01 18:40:33
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-06 11:53:12
+# @Last Modified time: 2016-12-07 15:55:06
 import os 
 from module.xml_parser import XmlParser
 from module.file_hash import *
@@ -26,7 +26,7 @@ class ResInfoSort(object):
     def list_type_data_out(self,path,in_list,md5):
         if len(in_list) is not None:
             for item in in_list:
-                type_value = item.split('.')[1]
+                type_value = item.split('.')[-1]
                 file_name = item.split('/')[-1].split('.')[0]
                 file_path = item 
                 out = md5 + '|' + type_value + '|' + file_name + '|' + file_path + '\n'
