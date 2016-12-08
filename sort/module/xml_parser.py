@@ -140,7 +140,8 @@ class XmlParser(object):
         for node in nodes:
             if toparser == 'action':
                 v = node.toxml()[22:][:-12]
-                if 'android' in v:
+                v_t = v.split('.')[0]
+                if v_t == 'android':
                     ret_list.append(v)
             elif toparser == 'uses-permission':
                 v = node.toxml()[31:][:-21]
@@ -148,5 +149,3 @@ class XmlParser(object):
                     ret_list.append(v[19:])
         ret_list = list(set(ret_list))
         return ret_list
-
-# obj = XmlParser('29b95ff530c038fd9632c8d1eef79e20.apk','temp.xml')

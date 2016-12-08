@@ -3,7 +3,7 @@
 # @Author: anchen
 # @Date:   2016-11-11 15:36:10
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-11-12 17:21:30
+# @Last Modified time: 2016-12-08 14:16:49
 import os 
 
 def get_file_path_list(rootDir):
@@ -39,3 +39,13 @@ def collect_bin(path):
         if ret == -1:
             collect_set.append(item)
     return collect_set
+
+def get_res_file_name(path):
+    v = path.split('/')[-1].split('.')
+    v_t = ''
+    if len(v) == 2:
+        return v[0]
+    else:
+        for coll in v[0:-1]:
+            v_t += coll + '.'
+        return v_t[:-1]

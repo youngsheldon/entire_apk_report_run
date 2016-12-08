@@ -3,7 +3,7 @@
 # @Author: anchen
 # @Date:   2016-11-10 09:20:32
 # @Last Modified by:   anchen
-# @Last Modified time: 2016-12-07 19:10:43
+# @Last Modified time: 2016-12-08 15:22:00
 import hashlib
 import os,sys
 import functools
@@ -117,7 +117,14 @@ def get_apk_file_name(path):
     pos1 = value.find('`') 
     pos2 = value.find('\'') 
     file_name = value[pos1+1:pos2]
-    return file_name.split('.')[0]
+    v = file_name.split('.')
+    v_t = ''
+    if len(v) == 2:
+        return v[0]
+    else:
+        for coll in v[0:-1]:
+            v_t += coll + '.'
+        return v_t[:-1]
 
 def get_datetime():
     return time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
@@ -131,8 +138,12 @@ def get_ip_attribution(ip):
         return 'no attribution'
     else:
         url = 'http://ip.taobao.com/service/getIpInfo.php?ip=%s' % ip 
-        f = urllib2.urlopen(url).read()
-        s = simplejson.loads(f)
+        try:
+            f = urllib2.urlopen(url).read()
+            s = simplejson.loads(f)
+        except Exception, e:
+            f = urllib2.urlopen(url).read()
+            s = simplejson.loads(f)
         ret = []
         ret.append(s['data']['ip'])
         ret.append(s['data']['country'])
