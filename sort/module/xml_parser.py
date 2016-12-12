@@ -129,10 +129,18 @@ class XmlParser(object):
 
     def parserSdkVersion(self):
         nodes = self.dom.getElementsByTagName('uses-sdk')
-        v = nodes[0].toxml()
-        minSdkVersion = v.split('\"')[1]
-        tarSdkVersion = v.split('\"')[3]
-        return minSdkVersion,tarSdkVersion 
+        if nodes:
+            v = nodes[0].toxml()
+            v_to_str = str(v)
+            minSdkVersion = v.split('\"')[1]
+            if 'targetSdkVersion' in v_to_str:
+                tarSdkVersion = v.split('\"')[3]
+            else:
+                tarSdkVersion = '0'
+        else:
+            minSdkVersion = '0'
+            tarSdkVersion = '0'
+        return minSdkVersion,tarSdkVersion
 
     def praserPermissionOrAction2(self,toparser):
         ret_list = []
